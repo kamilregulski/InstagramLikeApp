@@ -3,23 +3,24 @@ import {Image, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import styles from './styles';
 
-function Photo() {
+const Photo = (props: any) => {
+  const {photo} = props;
   const navigation = useNavigation();
-  const onPress = () => navigation.navigate('PhotoDetails');
+  const onPress = () =>
+    navigation.navigate('PhotoDetails', {photoId: photo.id});
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={onPress}
       style={styles.container}>
       <Image
-        style={styles.photo}
         source={{
-          uri:
-            'https://media.wired.com/photos/598e35994ab8482c0d6946e0/master/w_2560%2Cc_limit/phonepicutres-TA.jpg',
+          uri: photo.url,
         }}
+        style={styles.photo}
       />
     </TouchableOpacity>
   );
-}
+};
 
 export default Photo;

@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   photo: {
-    flex: 1,
     height: 250,
     width: '100%',
   },

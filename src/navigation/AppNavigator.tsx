@@ -7,7 +7,7 @@ import PhotoDetails from '../screens/PhotoDetails/PhotoDetails';
 
 const Stack = createStackNavigator();
 
-function AppNavigator() {
+const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
@@ -28,6 +28,6 @@ function AppNavigator() {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default AppNavigator;
