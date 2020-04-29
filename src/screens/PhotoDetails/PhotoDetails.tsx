@@ -1,5 +1,6 @@
 import React, {FunctionComponent} from 'react';
-import {Image, SafeAreaView, StatusBar, Text} from 'react-native';
+import {SafeAreaView, StatusBar, Text} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
 import NetworkStatus from '../../components/NetworkStatus/NetworkStatus';
@@ -24,8 +25,9 @@ const PhotoDetails: FunctionComponent<Props> = ({data}: Props) => {
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <NetworkStatus />
-        <Image
+        <FastImage
           source={{
+            priority: FastImage.priority.high,
             uri: photo.url,
           }}
           style={styles.photo}

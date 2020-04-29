@@ -1,5 +1,6 @@
 import React, {FunctionComponent} from 'react';
-import {Image, TouchableOpacity} from 'react-native';
+import {TouchableOpacity} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 import styles from './styles';
 
@@ -19,8 +20,9 @@ const Photo: FunctionComponent<Props> = ({photo}) => {
       activeOpacity={0.8}
       onPress={onPress}
       style={styles.container}>
-      <Image
+      <FastImage
         source={{
+          priority: FastImage.priority.high,
           uri: photo.url,
         }}
         style={styles.photo}
