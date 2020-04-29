@@ -1,19 +1,15 @@
 import React, {FunctionComponent} from 'react';
 import {TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {useNavigation} from '@react-navigation/native';
 import {PhotoType} from '../../types';
 import styles from './styles';
 
 type Props = {
+  onPress?: () => void;
   photo: PhotoType;
 };
 
-const Photo: FunctionComponent<Props> = ({photo}: Props) => {
-  const navigation = useNavigation();
-  const onPress = () => {
-    navigation.navigate('PhotoDetails', {photoId: photo.id});
-  };
+const Photo: FunctionComponent<Props> = ({onPress, photo}: Props) => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
