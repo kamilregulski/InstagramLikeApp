@@ -1,7 +1,8 @@
 import React from 'react';
 import {ReduxNetworkProvider} from 'react-native-offline';
+import {PersistGate} from 'redux-persist/es/integration/react';
 import {Provider} from 'react-redux';
-import createStore from './src/redux/createStore';
+import {store, persistor} from './src/redux/createStore';
 import AppNavigator from './src/navigation/AppNavigator';
 import {
   ApolloClient,
@@ -17,15 +18,15 @@ export const client = new ApolloClient({
   }),
 });
 
-const store = createStore();
-
 const App = () => {
   return (
     <ApolloProvider client={client}>
       <Provider store={store}>
-        <ReduxNetworkProvider>
-          <AppNavigator />
-        </ReduxNetworkProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <ReduxNetworkProvider>
+            <AppNavigator />
+          </ReduxNetworkProvider>
+        </PersistGate>
       </Provider>
     </ApolloProvider>
   );
