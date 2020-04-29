@@ -8,7 +8,7 @@ type Props = {
   isConnected: boolean;
 };
 
-const NetworkStatus: FunctionComponent<Props> = ({isConnected}) => {
+const NetworkStatus: FunctionComponent<Props> = ({isConnected}: Props) => {
   return (
     <View style={[styles.container, isConnected && styles.connected]}>
       <Text style={styles.text}>

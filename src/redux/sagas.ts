@@ -1,4 +1,4 @@
-import {delay, fork, call, put} from 'redux-saga/effects';
+import {call, delay, fork, put} from 'redux-saga/effects';
 import * as actions from './actions';
 import {client} from '../../App';
 import {GET_PHOTOS} from '../graphql/queries';
@@ -12,7 +12,7 @@ export async function fetchPhotosAsync() {
 
 export function* fetchPhotos() {
   yield put(actions.requestPhotos());
-  yield delay(2000);
+  yield delay(1000);
   const data = yield call(fetchPhotosAsync);
   yield put(actions.receivePhotos(data.photos));
 }

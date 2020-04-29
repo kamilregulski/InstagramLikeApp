@@ -15,23 +15,20 @@ type GetReducerState<T> = {
 };
 
 export const reducers = {
-  photos,
   network,
+  photos,
 };
+
+export type AppState = GetReducerState<typeof reducers>;
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
   whitelist: ['photos'],
-  blacklist: [],
+  blacklist: ['network'],
 };
 
-export type AppState = GetReducerState<typeof reducers>;
-
-const networkMiddleware = createNetworkMiddleware({
-  regexActionType: /^OTHER/,
-  actionTypes: ['GET_PHOTOS'],
-});
+const networkMiddleware = createNetworkMiddleware();
 const sagaMiddleware = createSagaMiddleware();
 const loggerMiddleware = createLogger();
 const rootReducer = combineReducers(reducers);

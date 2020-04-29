@@ -5,21 +5,20 @@ import {connect} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
 import NetworkStatus from '../../components/NetworkStatus/NetworkStatus';
 import {AppState} from '../../redux/createStore';
+import {PhotosType} from '../../types';
 import styles from './styles';
 
 type Props = {
-  data: any;
+  photos: PhotosType;
 };
 
-const PhotoDetails: FunctionComponent<Props> = ({data}: Props) => {
+const PhotoDetails: FunctionComponent<Props> = ({photos}: Props) => {
   const route = useRoute();
   const {photoId} = route.params as any;
-  const photo = data.photos.find(({id}: {id: number}) => id === photoId);
-
+  const photo = photos.items.find(({id}: {id: number}) => id === photoId);
   if (!photo) {
-    <Text>No photo...</Text>;
+    return <Text>No photo...</Text>;
   }
-
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -39,7 +38,7 @@ const PhotoDetails: FunctionComponent<Props> = ({data}: Props) => {
 };
 
 const mapStateToProps = (state: AppState) => ({
-  data: state.photos,
+  photos: state.photos,
 });
 
 export default connect(mapStateToProps)(PhotoDetails);

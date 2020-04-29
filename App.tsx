@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 import {ReduxNetworkProvider} from 'react-native-offline';
 import {PersistGate} from 'redux-persist/es/integration/react';
 import {Provider} from 'react-redux';
@@ -18,7 +18,7 @@ export const client = new ApolloClient({
   }),
 });
 
-const App = () => {
+const App: FunctionComponent = () => {
   return (
     <ApolloProvider client={client}>
       <Provider store={store}>

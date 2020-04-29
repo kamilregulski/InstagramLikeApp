@@ -3,19 +3,22 @@ import {SafeAreaView, FlatList, StatusBar} from 'react-native';
 import {connect} from 'react-redux';
 import Photo from '../../components/Photo/Photo';
 import NetworkStatus from '../../components/NetworkStatus/NetworkStatus';
-import {getPhotos, GetPhotosType} from '../../redux/actions';
 import {fetchPhotos} from '../../redux/sagas';
 import {AppState} from '../../redux/createStore';
+import {PhotoType, PhotosType, NetworkType} from '../../types';
 import styles from './styles';
 
 type Props = {
-  data: any;
-  getPhotosAction: GetPhotosType;
+  network: NetworkType;
+  photos: PhotosType;
 };
 
-const Home: FunctionComponent<Props> = ({data}: Props) => {
-  const renderItem = ({item}: any) => <Photo photo={item} />;
-  const onRefresh = () => fetchPhotos();
+const Home: FunctionComponent<Props> = ({network, photos}: Props) => {
+  const data = photos.items;
+  const renderItem = ({item}: {item: PhotoType}) => <Photo photo={item} />;
+  const keyExtractor = (item: PhotoType) => item.id.toString();
+  const onRefresh = () => (network.isConnected ? fetchPhotos() : undefined);
+  const refreshing = photos.isFetching;
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -23,11 +26,11 @@ const Home: FunctionComponent<Props> = ({data}: Props) => {
         <NetworkStatus />
         <FlatList
           style={styles.flatList}
-          data={data.photos}
+          data={data}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={keyExtractor}
           onRefresh={onRefresh}
-          refreshing={data.isFetching}
+          refreshing={refreshing}
         />
       </SafeAreaView>
     </>
@@ -35,11 +38,8 @@ const Home: FunctionComponent<Props> = ({data}: Props) => {
 };
 
 const mapStateToProps = (state: AppState) => ({
-  data: state.photos,
+  network: state.network,
+  photos: state.photos,
 });
 
-const mapDispatchToProps = {
-  getPhotosAction: getPhotos,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);
