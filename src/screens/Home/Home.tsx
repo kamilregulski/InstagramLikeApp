@@ -1,44 +1,45 @@
-import React from 'react';
-import {SafeAreaView, ScrollView, StatusBar, Text} from 'react-native';
-import {gql, useQuery} from '@apollo/client';
+import React, {FunctionComponent} from 'react';
+import {SafeAreaView, FlatList, StatusBar} from 'react-native';
+import {connect} from 'react-redux';
 import Photo from '../../components/Photo/Photo';
+import NetworkStatus from '../../components/NetworkStatus/NetworkStatus';
+import {getPhotos, GetPhotosType} from '../../redux/actions';
+import {fetchPhotos} from '../../redux/sagas';
+import {AppState} from '../../redux/createStore';
 import styles from './styles';
 
-const GET_PHOTOS = gql`
-  {
-    photos {
-      id
-      url
-      description
-    }
-  }
-`;
+type Props = {
+  data: any;
+  getPhotosAction: GetPhotosType;
+};
 
-const Home = () => {
-  const {loading, error, data} = useQuery(GET_PHOTOS);
-
-  if (loading) {
-    return <Text>Loading...</Text>;
-  }
-
-  if (error) {
-    return <Text>Error</Text>;
-  }
-
+const Home: FunctionComponent<Props> = ({data}: Props) => {
+  const renderItem = ({item}: any) => <Photo photo={item} />;
+  const onRefresh = () => fetchPhotos();
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          {data.photos.map((photo: any, key: number) => (
-            <Photo key={key} photo={photo} />
-          ))}
-        </ScrollView>
+        <NetworkStatus />
+        <FlatList
+          style={styles.flatList}
+          data={data.photos}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+          onRefresh={onRefresh}
+          refreshing={data.isFetching}
+        />
       </SafeAreaView>
     </>
   );
 };
 
-export default Home;
+const mapStateToProps = (state: AppState) => ({
+  data: state.photos,
+});
+
+const mapDispatchToProps = {
+  getPhotosAction: getPhotos,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 import {Image, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import styles from './styles';
 
-const Photo = (props: any) => {
-  const {photo} = props;
+type Props = {
+  photo: {
+    id: number;
+    url: string;
+  };
+};
+
+const Photo: FunctionComponent<Props> = ({photo}) => {
   const navigation = useNavigation();
   const onPress = () =>
     navigation.navigate('PhotoDetails', {photoId: photo.id});

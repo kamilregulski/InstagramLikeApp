@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from '../screens/Home/Home';
@@ -7,7 +7,7 @@ import PhotoDetails from '../screens/PhotoDetails/PhotoDetails';
 
 const Stack = createStackNavigator();
 
-const AppNavigator = () => {
+const AppNavigator: FunctionComponent = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
