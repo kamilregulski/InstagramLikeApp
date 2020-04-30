@@ -1,7 +1,8 @@
-import {call, delay, fork, put} from 'redux-saga/effects';
+import {all, delay, fork, put, retry} from 'redux-saga/effects';
 import * as actions from './actions';
 import {client} from '../../App';
 import {GET_PHOTOS} from '../graphql/queries';
+import {networkSaga} from 'react-native-offline';
 
 export async function fetchPhotosAsync() {
   const {data} = await client.query({
@@ -11,12 +12,17 @@ export async function fetchPhotosAsync() {
 }
 
 export function* fetchPhotos() {
-  yield put(actions.requestPhotos());
-  yield delay(1000);
-  const data = yield call(fetchPhotosAsync);
-  yield put(actions.receivePhotos(data.photos));
+  try {
+    const SECOND = 1000;
+    yield put(actions.requestPhotos());
+    yield delay(1000);
+    const data = yield retry(10, 10 * SECOND, fetchPhotosAsync);
+    yield put(actions.receivePhotos(data.photos));
+  } catch {
+    yield put(actions.failurePhotos());
+  }
 }
 
 export default function* rootSaga() {
-  yield fork(fetchPhotos);
+  yield all([fork(fetchPhotos), fork(networkSaga)]);
 }

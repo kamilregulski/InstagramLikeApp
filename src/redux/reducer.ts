@@ -1,4 +1,4 @@
-import {REQUEST_PHOTOS, RECEIVE_PHOTOS} from './actions';
+import {REQUEST_PHOTOS, RECEIVE_PHOTOS, FAILURE_PHOTOS} from './actions';
 import {PhotosType} from '../types';
 
 const initialState: PhotosType = {
@@ -17,6 +17,9 @@ const reducer = (state = initialState, action: any) => {
         isFetching: false,
         items: action.items,
       };
+
+    case FAILURE_PHOTOS:
+      return {...state, isFetching: false};
 
     default:
       return state;

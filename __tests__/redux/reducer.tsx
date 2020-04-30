@@ -1,4 +1,8 @@
-import {REQUEST_PHOTOS, RECEIVE_PHOTOS} from '../../src/redux/actions';
+import {
+  REQUEST_PHOTOS,
+  RECEIVE_PHOTOS,
+  FAILURE_PHOTOS,
+} from '../../src/redux/actions';
 import reducer from '../../src/redux/reducer';
 
 describe('photos reducer', () => {
@@ -56,6 +60,16 @@ describe('photos reducer', () => {
           description: 'Description 2',
         },
       ],
+    });
+
+    expect(
+      reducer(undefined, {
+        type: FAILURE_PHOTOS,
+        isFetching: false,
+      }),
+    ).toEqual({
+      isFetching: false,
+      items: [],
     });
   });
 });

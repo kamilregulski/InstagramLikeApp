@@ -1,8 +1,10 @@
 import {
   REQUEST_PHOTOS,
   RECEIVE_PHOTOS,
+  FAILURE_PHOTOS,
   requestPhotos,
   receivePhotos,
+  failurePhotos,
 } from '../../src/redux/actions';
 import {PhotoType} from '../../src/types';
 
@@ -26,5 +28,12 @@ describe('actions', () => {
       items,
     };
     expect(receivePhotos(items)).toEqual(expectedAction);
+  });
+
+  it('should create an action to failure photos', () => {
+    const expectedAction = {
+      type: FAILURE_PHOTOS,
+    };
+    expect(failurePhotos()).toEqual(expectedAction);
   });
 });
