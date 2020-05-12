@@ -1,3 +1,6 @@
+if (__DEV__) {
+  import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
+}
 import React, {FunctionComponent} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import {ReduxNetworkProvider} from 'react-native-offline';
