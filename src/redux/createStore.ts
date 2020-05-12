@@ -29,8 +29,10 @@ const persistConfig = {
   blacklist: ['network'],
 };
 
+const sagaMonitor = Reactotron.createSagaMonitor();
+
 const networkMiddleware = createNetworkMiddleware();
-const sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware({sagaMonitor});
 const loggerMiddleware = createLogger();
 const rootReducer = combineReducers(reducers);
 const middlewares = [networkMiddleware];
