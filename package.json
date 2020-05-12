@@ -59,6 +59,7 @@
     "react-native-typescript-transformer": "^1.2.13",
     "react-test-renderer": "^16.13.1",
     "reactotron-react-native": "^5.0.0",
+    "reactotron-redux": "^3.1.3",
     "redux-logger": "^3.0.6",
     "ts-jest": "^25.4.0",
     "typescript": "^3.8.3"

@@ -1,4 +1,5 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
+import Reactotron from '../../ReactotronConfig';
 import createSagaMiddleware from 'redux-saga';
 import AsyncStorage from '@react-native-community/async-storage';
 import {createLogger} from 'redux-logger';
@@ -36,7 +37,10 @@ const middlewares = [networkMiddleware];
 middlewares.push(sagaMiddleware);
 middlewares.push(loggerMiddleware);
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-const store = createStore(persistedReducer, applyMiddleware(...middlewares));
+const store = createStore(
+  persistedReducer,
+  compose(applyMiddleware(...middlewares), Reactotron.createEnhancer()),
+);
 sagaMiddleware.run(rootSaga);
 let persistor = persistStore(store);
 
