@@ -1,9 +1,5 @@
-import {
-  REQUEST_PHOTOS,
-  RECEIVE_PHOTOS,
-  FAILURE_PHOTOS,
-} from '../../src/redux/actions';
-import reducer from '../../src/redux/reducer';
+import {Types} from 'src/redux/actions';
+import reducer from 'src/redux/reducer';
 
 describe('photos reducer', () => {
   it('should return the initial state', () => {
@@ -13,10 +9,10 @@ describe('photos reducer', () => {
     });
   });
 
-  it('should handle REQUEST_PHOTOS', () => {
+  it('should handle GET_PHOTOS_REQUEST', () => {
     expect(
       reducer(undefined, {
-        type: REQUEST_PHOTOS,
+        type: Types.GET_PHOTOS_REQUEST,
         isFetching: true,
       }),
     ).toEqual({
@@ -31,19 +27,21 @@ describe('photos reducer', () => {
           items: [],
         },
         {
-          type: RECEIVE_PHOTOS,
-          items: [
-            {
-              id: 1,
-              url: 'https://...',
-              description: 'Description 1',
-            },
-            {
-              id: 2,
-              url: 'https://...',
-              description: 'Description 2',
-            },
-          ],
+          type: Types.GET_PHOTOS_SUCCESS,
+          payload: {
+            items: [
+              {
+                id: 1,
+                url: 'https://...',
+                description: 'Description 1',
+              },
+              {
+                id: 2,
+                url: 'https://...',
+                description: 'Description 2',
+              },
+            ],
+          },
         },
       ),
     ).toEqual({
@@ -64,7 +62,7 @@ describe('photos reducer', () => {
 
     expect(
       reducer(undefined, {
-        type: FAILURE_PHOTOS,
+        type: Types.GET_PHOTOS_FAILURE,
         isFetching: false,
       }),
     ).toEqual({

@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from 'react';
 import {TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {PhotoType} from '../../types';
+import {PhotoType} from 'src/types';
 import styles from './styles';
 
 type Props = {

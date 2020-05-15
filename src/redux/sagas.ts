@@ -1,28 +1,23 @@
-import {all, delay, fork, put, retry} from 'redux-saga/effects';
-import * as actions from './actions';
-import {client} from '../../App';
-import {GET_PHOTOS} from '../graphql/queries';
+import {all, call, fork, put, takeEvery} from 'redux-saga/effects';
 import {networkSaga} from 'react-native-offline';
+import * as actions from './actions';
+import {getPhotosApi} from '../api/photos';
 
-export async function fetchPhotosAsync() {
-  const {data} = await client.query({
-    query: GET_PHOTOS,
-  });
-  return data;
-}
-
-export function* fetchPhotos() {
+function* getPhotos() {
+  console.log('sagas.getPhotos');
   try {
-    const SECOND = 1000;
-    yield put(actions.requestPhotos());
-    yield delay(1000);
-    const data = yield retry(10, 10 * SECOND, fetchPhotosAsync);
-    yield put(actions.receivePhotos(data.photos));
+    const result = yield call(getPhotosApi);
+    yield put(actions.getPhotosSuccess({items: result.photos}));
   } catch {
-    yield put(actions.failurePhotos());
+    yield put(actions.getPhotosFailure());
   }
 }
 
+function* watchGetPhotosRequest() {
+  console.log('sagas.watchGetPhotosRequest');
+  yield takeEvery(actions.Types.GET_PHOTOS_REQUEST, getPhotos);
+}
+
 export default function* rootSaga() {
-  yield all([fork(fetchPhotos), fork(networkSaga)]);
+  yield all([fork(networkSaga), fork(watchGetPhotosRequest)]);
 }

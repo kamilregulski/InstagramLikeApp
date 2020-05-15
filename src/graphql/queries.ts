@@ -1,6 +1,6 @@
 import {gql} from '@apollo/client';
 
-export const GET_PHOTOS = gql`
+export const GET_PHOTOS_QUERY = gql`
   {
     photos {
       id

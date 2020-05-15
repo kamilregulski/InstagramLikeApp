@@ -1,23 +1,30 @@
-export const REQUEST_PHOTOS = 'REQUEST_PHOTOS';
-export const RECEIVE_PHOTOS = 'RECEIVE_PHOTOS';
-export const FAILURE_PHOTOS = 'FAILURE_PHOTOS';
+import {PhotoType} from 'src/types';
 
-import {PhotoType} from '../types';
+export const Types = {
+  GET_PHOTOS_REQUEST: 'GET_PHOTOS_REQUEST',
+  GET_PHOTOS_SUCCESS: 'GET_PHOTOS_SUCCESS',
+  GET_PHOTOS_FAILURE: 'GET_PHOTOS_FAILURE',
+};
 
-export const requestPhotos = () => ({
-  type: REQUEST_PHOTOS,
-});
-export type RequestPhotosType = typeof requestPhotos;
-
-export function receivePhotos(items: PhotoType[]) {
+export const getPhotosRequest = () => {
+  console.log('actions.getPhotosRequest');
   return {
-    type: RECEIVE_PHOTOS,
-    items,
+    type: Types.GET_PHOTOS_REQUEST,
+  };
+};
+export type GetPhotosRequestType = typeof getPhotosRequest;
+
+export function getPhotosSuccess({items}: {items: PhotoType[]}) {
+  return {
+    type: Types.GET_PHOTOS_SUCCESS,
+    payload: {
+      items,
+    },
   };
 }
-export type ReceivePhotosType = typeof receivePhotos;
+export type GetPhotosSuccessType = typeof getPhotosSuccess;
 
-export const failurePhotos = () => ({
-  type: FAILURE_PHOTOS,
+export const getPhotosFailure = () => ({
+  type: Types.GET_PHOTOS_FAILURE,
 });
-export type FailurePhotosType = typeof failurePhotos;
+export type GetPhotosFailureType = typeof getPhotosFailure;

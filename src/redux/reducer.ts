@@ -1,5 +1,5 @@
-import {REQUEST_PHOTOS, RECEIVE_PHOTOS, FAILURE_PHOTOS} from './actions';
-import {PhotosType} from '../types';
+import {Types} from 'src/redux/actions';
+import {PhotosType} from 'src/types';
 
 const initialState: PhotosType = {
   isFetching: false,
@@ -8,21 +8,22 @@ const initialState: PhotosType = {
 
 const reducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case REQUEST_PHOTOS:
+    case Types.GET_PHOTOS_REQUEST: {
       return {...state, isFetching: true};
-
-    case RECEIVE_PHOTOS:
+    }
+    case Types.GET_PHOTOS_SUCCESS: {
       return {
         ...state,
         isFetching: false,
-        items: action.items,
+        items: action.payload.items,
       };
-
-    case FAILURE_PHOTOS:
+    }
+    case Types.GET_PHOTOS_FAILURE: {
       return {...state, isFetching: false};
-
-    default:
+    }
+    default: {
       return state;
+    }
   }
 };
 

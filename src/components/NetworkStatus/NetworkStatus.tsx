@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from 'react';
 import {connect} from 'react-redux';
 import {Text, View} from 'react-native';
-import {AppState} from '../../redux/createStore';
+import {AppState} from 'src/redux/createStore';
 import styles from './styles';
 
 type Props = {

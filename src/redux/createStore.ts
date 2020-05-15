@@ -1,5 +1,4 @@
 import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
-import Reactotron from '../../ReactotronConfig';
 import createSagaMiddleware from 'redux-saga';
 import AsyncStorage from '@react-native-community/async-storage';
 import {createLogger} from 'redux-logger';
@@ -8,6 +7,7 @@ import {
   reducer as network,
   createNetworkMiddleware,
 } from 'react-native-offline';
+import Reactotron from '../../ReactotronConfig';
 import photos from './reducer';
 import rootSaga from './sagas';
 

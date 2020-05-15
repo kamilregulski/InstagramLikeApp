@@ -1,22 +1,15 @@
-import {
-  REQUEST_PHOTOS,
-  RECEIVE_PHOTOS,
-  FAILURE_PHOTOS,
-  requestPhotos,
-  receivePhotos,
-  failurePhotos,
-} from '../../src/redux/actions';
-import {PhotoType} from '../../src/types';
+import * as actions from 'src/redux/actions';
+import {PhotoType} from 'src/types';
 
 describe('actions', () => {
-  it('should create an action to request photos', () => {
+  it('should create an action to get photos request', () => {
     const expectedAction = {
-      type: REQUEST_PHOTOS,
+      type: actions.Types.GET_PHOTOS_REQUEST,
     };
-    expect(requestPhotos()).toEqual(expectedAction);
+    expect(actions.getPhotosRequest()).toEqual(expectedAction);
   });
 
-  it('should create an action to receive photos', () => {
+  it('should create an action to get photos success', () => {
     const item: PhotoType = {
       id: 1,
       url: 'https://...',
@@ -24,16 +17,18 @@ describe('actions', () => {
     };
     const items: PhotoType[] = [item];
     const expectedAction = {
-      type: RECEIVE_PHOTOS,
-      items,
+      type: actions.Types.GET_PHOTOS_SUCCESS,
+      payload: {
+        items,
+      },
     };
-    expect(receivePhotos(items)).toEqual(expectedAction);
+    expect(actions.getPhotosSuccess({items})).toEqual(expectedAction);
   });
 
-  it('should create an action to failure photos', () => {
+  it('should create an action to get photos failure', () => {
     const expectedAction = {
-      type: FAILURE_PHOTOS,
+      type: actions.Types.GET_PHOTOS_FAILURE,
     };
-    expect(failurePhotos()).toEqual(expectedAction);
+    expect(actions.getPhotosFailure()).toEqual(expectedAction);
   });
 });

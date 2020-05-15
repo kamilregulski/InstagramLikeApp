@@ -2,8 +2,8 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {shallow} from 'enzyme';
 import FastImage from 'react-native-fast-image';
-import Photo from '../../src/components/Photo/Photo';
-import {PhotoType} from '../../src/types';
+import Photo from 'src/components/Photo/Photo';
+import {PhotoType} from 'src/types';
 
 const photo: PhotoType = {
   id: 1,

@@ -1,6 +1,6 @@
 import 'react';
 
 describe('sagas', () => {
-  it('fetchPhotosAsync', () => undefined);
-  it('fetchPhotos', () => undefined);
+  it('getPhotos', () => undefined);
+  it('watchGetPhotosRequest', () => undefined);
 });

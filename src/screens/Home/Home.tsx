@@ -1,25 +1,28 @@
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useEffect} from 'react';
 import {SafeAreaView, FlatList, StatusBar, Text, View} from 'react-native';
 import {connect} from 'react-redux';
-import Photo from '../../components/Photo/Photo';
-import NetworkStatus from '../../components/NetworkStatus/NetworkStatus';
-import {requestPhotos} from '../../redux/actions';
-import {AppState} from '../../redux/createStore';
 import {useNavigation} from '@react-navigation/native';
-import {PhotoType, PhotosType, NetworkType} from '../../types';
+import Photo from 'src/components/Photo/Photo';
+import NetworkStatus from 'src/components/NetworkStatus/NetworkStatus';
+import * as actions from 'src/redux/actions';
+import {AppState} from 'src/redux/createStore';
+import {PhotoType, PhotosType, NetworkType} from 'src/types';
 import styles from './styles';
 
 type Props = {
   network: NetworkType;
   photos: PhotosType;
-  requestPhotos: () => void;
+  getPhotosRequest: () => void;
 };
 
 const Home: FunctionComponent<Props> = ({
   network,
   photos,
-  requestPhotos: refetchPhotos,
+  getPhotosRequest,
 }: Props) => {
+  useEffect(() => {
+    getPhotosRequest();
+  }, [getPhotosRequest]);
   const navigation = useNavigation();
   const onPress = (photoId: number) => {
     navigation.navigate('PhotoDetails', {photoId});
@@ -29,13 +32,8 @@ const Home: FunctionComponent<Props> = ({
     <Photo onPress={() => onPress(item.id)} photo={item} />
   );
   const keyExtractor = (item: PhotoType) => item.id.toString();
-  const startRefetching = () => {
-    // TODO:
-    // It's my first time with redux-saga and I don't know
-    // how to run saga fetchPhotos() from component...
-    refetchPhotos();
-  };
-  const onRefresh = () => (network.isConnected ? startRefetching() : undefined);
+  const onRefresh = () =>
+    network.isConnected ? getPhotosRequest() : undefined;
   const refreshing = photos.isFetching;
   const ListEmptyComponent = () =>
     !refreshing ? (
@@ -73,7 +71,7 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = () => ({
-  requestPhotos,
+  getPhotosRequest: actions.getPhotosRequest,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

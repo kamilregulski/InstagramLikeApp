@@ -3,9 +3,9 @@ import {SafeAreaView, StatusBar, Text} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
-import NetworkStatus from '../../components/NetworkStatus/NetworkStatus';
-import {AppState} from '../../redux/createStore';
-import {PhotosType} from '../../types';
+import NetworkStatus from 'src/components/NetworkStatus/NetworkStatus';
+import {AppState} from 'src/redux/createStore';
+import {PhotosType} from 'src/types';
 import styles from './styles';
 
 type Props = {
